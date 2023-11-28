@@ -1,0 +1,29 @@
+export async function authenticateToken(req, res, next) {
+  // Mendapatkan token dari header Authorization
+  try {
+    const authHeader = req.cookies.token;
+
+    if (!authHeader) {
+      return res.status(401).json({
+        message: 'Authorization header not found',
+      });
+    }
+
+    const token = authHeader.split(' ')[1];
+    const decoded = verifyAccessToken(token);
+
+
+    const user = await userModel.findById(decoded.id);
+
+    if (!user) {
+      return res.status(401).send({ message: 'User tidak ditemukan' });
+    }
+      // Menyimpan data user yang terdapat pada token pada object `req.user`
+    req.user = user;
+    next();
+  } catch (err){
+    if (err.name === "TokenExpiredError") {
+      return res.status(401).json({ message: "Token expired" });
+    }
+  }
+}
