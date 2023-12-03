@@ -14,7 +14,7 @@ git clone https://github.com/Project-Dishcover/DISHCOVER-API.git
 cd DISHCOVER-API
 ```
 
--   There are two env in this code, <br/> one in root => for JWT Token <br/> one inside src/ => for DATABASE <br>
+-   There are two env in this repository, <br/> one in root => for Database <br/> one inside src/ => for JWT Token <br>
     Copy the .env.example file to .env
 
 ```bash
