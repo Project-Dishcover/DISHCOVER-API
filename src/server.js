@@ -1,5 +1,6 @@
 
 import { authRouter } from './routes/auth.js';
+import { recipeRouter } from './routes/recipe.js';
 import express from 'express';
 
 
@@ -9,7 +10,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Routes
-app.use('/user', authRouter);
+app.use('/api/user', authRouter);
+app.use('/api/recipe', recipeRouter);
+
 
 
 // listen to server

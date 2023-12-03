@@ -16,3 +16,10 @@ model User {
   password    String
   timestamp   DateTime @default(now())
 }
+
+model Recipe {
+  id          String      @id @default(uuid())
+  name        String   
+  ingredients String      @db.Text
+  step        String      @db.Text
+}
