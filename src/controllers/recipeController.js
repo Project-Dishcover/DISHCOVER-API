@@ -2,25 +2,60 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export async function getRecipes (req, res) {
+export async function getRecipes(req, res) {
     try {
-        const allRecipe = await prisma.recipe.findMany({
-            take: 100, // ngambil data hanya 100
-            skip: 5 // kita skip 5
-        });
-        if(!allRecipe) {
+        let recipes;
+
+        // Jika ada parameter query, lakukan pencarian
+        if (req.query.query) {
+            recipes = await prisma.recipe.findMany({
+                where: {
+                    OR: [
+                        { name: { contains: req.query.query } },
+                        // Tambahkan kolom-kolom lain yang ingin Anda sertakan dalam pencarian di atas
+                    ],
+                },
+                take: 100,
+                skip: 5,
+            });
+        } else if (req.query.keywords) {
+            // Pencarian berdasarkan array kata kunci dari query string
+            const keywordArray = req.query.keywords.split(',');
+            recipes = await prisma.recipe.findMany({
+                where: {
+                    AND: keywordArray.map((keyword) => ({
+                        name: { contains: keyword },
+                        // Tambahkan kolom-kolom lain yang ingin Anda sertakan dalam pencarian di atas
+                    })),
+                },
+                take: 100,
+                skip: 5,
+            });
+        } else {
+            // Jika tidak ada parameter query atau keywords, ambil semua resep
+            recipes = await prisma.recipe.findMany({
+                take: 100,
+                skip: 5,
+            });
+        }
+
+        // Handle jika tidak ada resep yang ditemukan
+        if (!recipes || recipes.length === 0) {
             res.status(204).json({
-                message: 'Recipe tidak ada'
-            })
+                message: 'Recipe tidak ada',
+            });
         } else {
             res.status(200).json({
                 status: 200,
-                message: 'Recipe ada',
-                data : allRecipe
-            })
+                message: 'Recipe ditemukan',
+                data: recipes,
+            });
         }
-    } catch (error){
+    } catch (error) {
         console.error(error);
+        res.status(500).json({
+            message: 'Terjadi kesalahan server',
+        });
     }
 }
 
