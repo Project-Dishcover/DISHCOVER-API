@@ -23,7 +23,7 @@ export async function getRecipes(req, res) {
             const keywordArray = req.query.keywords.split(',');
             recipes = await prisma.recipe.findMany({
                 where: {
-                    AND: keywordArray.map((keyword) => ({
+                    OR: keywordArray.map((keyword) => ({
                         name: { contains: keyword },
                         // Tambahkan kolom-kolom lain yang ingin Anda sertakan dalam pencarian di atas
                     })),

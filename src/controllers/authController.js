@@ -10,24 +10,48 @@ const prisma = new PrismaClient();
 
 
 
-export async function signup (req, res){
-    const { username, password} = req.body;
+export async function signup(req, res) {
+  const { name, username, email, password } = req.body;
 
-    try {
-        const hash = await hashPassword(password);
-
-        const user = await prisma.user.create({data : {
-          username, 
-          password:hash
-        },
+  try {
+      // Cek apakah email atau username sudah ada
+      const existingUser = await prisma.user.findFirst({
+          where: {
+              OR: [
+                  { email: email },
+                  { username: username },
+              ],
+          },
       });
-        res.status(201).json(user);
-    }
-    catch (err ) {
-        console.log(err);
-        res.status(404).send('error, user tidak berhasil dibuat');
-    }
+
+      if (existingUser) {
+          // Jika email atau username sudah ada, kirim respons kesalahan
+          return res.status(409).json({
+              message: 'Email atau username sudah digunakan. Silakan gunakan yang lain.',
+          });
+      }
+
+      // Jika email dan username unik, lanjutkan dengan membuat pengguna baru
+      const hash = await hashPassword(password);
+
+      const newUser = await prisma.user.create({
+          data: {
+              name,
+              email,
+              username,
+              password: hash,
+          },
+      });
+
+      res.status(201).json(newUser);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({
+          message: 'Terjadi kesalahan server',
+      });
+  }
 }
+
 
 
 export async function login(req, res) {
@@ -71,5 +95,4 @@ export async function logout (req, res) {
     sameSite: 'none',
   });
   res.sendStatus(204);
-
 }

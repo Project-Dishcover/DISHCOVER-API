@@ -12,14 +12,28 @@ datasource db {
 
 model User {
   id          String      @id @default(uuid())
-  username    String   @unique
+  name        String      @unique
+  username    String      @unique
+  email       String      @unique
   password    String
-  timestamp   DateTime @default(now())
+  timestamp   DateTime    @default(now())
+  favorites   Favourite[]
 }
 
 model Recipe {
   id          String      @id @default(uuid())
   name        String   
+  description String      @db.Text
   ingredients String      @db.Text
   step        String      @db.Text
+  urlimage    String      
+  favorites   Favourite[]
+}
+
+model Favourite {
+  id          String      @id @default(uuid())
+  user_id     String      // Menyimpan ID pengguna yang terkait
+  recipe_id   String      // Menyimpan ID resep yang terkait
+  User        User        @relation(fields: [user_id], references: [id])
+  recipe      Recipe      @relation(fields: [recipe_id], references: [id])
 }
