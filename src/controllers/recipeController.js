@@ -12,8 +12,14 @@ export async function getRecipes(req, res) {
                 where: {
                     OR: [
                         { name: { contains: req.query.query } },
-                        // Tambahkan kolom-kolom lain yang ingin Anda sertakan dalam pencarian di atas
+                        { ingredients: { contains: req.query.query } },
+                        // Tambahkan kolom-kolom lain yang ingin disertakan dalam pencarian di atas
                     ],
+                },
+                select: {
+                    name: true,
+                    description: true,
+                    urlimage: true,
                 },
                 take: 100,
                 skip: 5,
@@ -25,8 +31,13 @@ export async function getRecipes(req, res) {
                 where: {
                     OR: keywordArray.map((keyword) => ({
                         name: { contains: keyword },
-                        // Tambahkan kolom-kolom lain yang ingin Anda sertakan dalam pencarian di atas
+                        // Tambahkan kolom-kolom lain yang ingin disertakan dalam pencarian di atas
                     })),
+                },
+                select: {
+                    name: true,
+                    description: true,
+                    urlimage: true,
                 },
                 take: 100,
                 skip: 5,
@@ -34,8 +45,13 @@ export async function getRecipes(req, res) {
         } else {
             // Jika tidak ada parameter query atau keywords, ambil semua resep
             recipes = await prisma.recipe.findMany({
+                select: {
+                    name: true,
+                    description: true,
+                    urlimage: true,
+                },
                 take: 100,
-                skip: 5,
+                skip: 5, // pagination
             });
         }
 

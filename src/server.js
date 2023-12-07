@@ -1,6 +1,7 @@
 
 import { authRouter } from './routes/auth.js';
 import { myfavourite } from './routes/favourite.js';
+import { historyRouter } from './routes/history.js';
 import { recipeRouter } from './routes/recipe.js';
 import express from 'express';
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use('/api/user', authRouter);
 app.use('/api/recipe', recipeRouter);
 app.use('/api/myfavourite', myfavourite);
+app.use('/api/history', historyRouter);
 
 
 

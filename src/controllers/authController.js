@@ -69,7 +69,11 @@ export async function login(req, res) {
       return res.status(401).json({ message: 'username or password is incorrect' });
     }
 
-    const token = jwt.sign({ username: user.username }, `${process.env.JWT_TOKEN}`, { expiresIn: '1h' });
+    const payload = {
+      id: user.id,
+      username: user.username
+    }
+    const token = jwt.sign(payload, `${process.env.JWT_TOKEN}`, { expiresIn: '10h' });
     
     res.cookie('token', token, {
       httpOnly: true,

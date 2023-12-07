@@ -18,6 +18,7 @@ model User {
   password    String
   timestamp   DateTime    @default(now())
   favorites   Favourite[]
+  histories   History[]
 }
 
 model Recipe {
@@ -28,12 +29,22 @@ model Recipe {
   step        String      @db.Text
   urlimage    String      
   favorites   Favourite[]
+  histories   History[]
 }
 
 model Favourite {
   id          String      @id @default(uuid())
   user_id     String      // Menyimpan ID pengguna yang terkait
   recipe_id   String      // Menyimpan ID resep yang terkait
+  User        User        @relation(fields: [user_id], references: [id])
+  recipe      Recipe      @relation(fields: [recipe_id], references: [id])
+}
+
+model History {
+  id          String      @id @default(uuid())
+  user_id     String      // Menyimpan ID pengguna yang terkait
+  recipe_id   String      // Menyimpan ID resep yang terkait
+  accessedAt  DateTime
   User        User        @relation(fields: [user_id], references: [id])
   recipe      Recipe      @relation(fields: [recipe_id], references: [id])
 }

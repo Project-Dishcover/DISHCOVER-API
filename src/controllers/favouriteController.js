@@ -3,11 +3,13 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export async function getMyFavourite (req, res){
-    const {user_id} = req.params;
     try {
         const MyFavourite = await prisma.favourite.findMany({
             where: {
-                user_id: user_id
+                user_id: req.user.id
+            },
+            include: {
+                recipe : true
             }
         });
         if (!MyFavourite || MyFavourite.length === 0) {
@@ -27,12 +29,12 @@ export async function getMyFavourite (req, res){
 }
 
 export async function postFavourite (req, res) {
-    const {user_id, recipe_id} = req.body;
+    const {recipe_id} = req.body;
 
     try {
         const favourite = await prisma.favourite.create({
             data : {
-                user_id,
+                user_id : req.user.id,
                 recipe_id
             }
         });
