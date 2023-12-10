@@ -32,6 +32,7 @@ export async function getRecipes(req, res) {
                 where: {
                     OR: keywordArray.map((keyword) => ({
                         name: { contains: keyword },
+                        ingredients: { contains: req.query.query }
                         // Tambahkan kolom-kolom lain yang ingin disertakan dalam pencarian di atas
                     })),
                 },
