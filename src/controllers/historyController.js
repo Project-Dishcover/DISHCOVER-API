@@ -68,7 +68,7 @@ export async function deleteHistory (req, res) {
     try {
         const History = await prisma.history.delete({ where: { id: String(id)} });
         if (!History) {
-          res.status(200).json({
+          res.status(204).json({
             message: 'History id tidak benar',
           });
         } else {

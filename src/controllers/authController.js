@@ -93,10 +93,17 @@ export async function login(req, res) {
 
 
 export async function logout (req, res) {
-  res.clearCookie('token', {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'none',
-  });
-  res.sendStatus(204);
+  try {
+    res.clearCookie('token');
+
+    // Tambahkan pesan "Berhasil Logout" ke respons
+    res.status(204).json({
+      message: 'Berhasil Logout',
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'Terjadi kesalahan server',
+    });
+  }
 }

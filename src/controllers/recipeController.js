@@ -17,6 +17,7 @@ export async function getRecipes(req, res) {
                     ],
                 },
                 select: {
+                    id: true,
                     name: true,
                     description: true,
                     urlimage: true,
@@ -35,6 +36,7 @@ export async function getRecipes(req, res) {
                     })),
                 },
                 select: {
+                    id: true,
                     name: true,
                     description: true,
                     urlimage: true,
@@ -46,6 +48,7 @@ export async function getRecipes(req, res) {
             // Jika tidak ada parameter query atau keywords, ambil semua resep
             recipes = await prisma.recipe.findMany({
                 select: {
+                    id: true,
                     name: true,
                     description: true,
                     urlimage: true,

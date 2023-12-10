@@ -29,13 +29,13 @@ export async function getMyFavourite (req, res){
 }
 
 export async function postFavourite (req, res) {
-    const {recipe_id} = req.body;
+    const {id} = req.params;
 
     try {
         const favourite = await prisma.favourite.create({
             data : {
                 user_id : req.user.id,
-                recipe_id
+                recipe_id: id
             }
         });
         res.status(201).json({
