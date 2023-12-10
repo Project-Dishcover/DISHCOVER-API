@@ -43,7 +43,13 @@ export async function signup(req, res) {
           },
       });
 
-      res.status(201).json(newUser);
+      res.status(201).json({
+        message: "berhasil membuat akun",
+        data:{
+          id: newUser.id,
+          username: newUser.username,
+        }
+      });
   } catch (error) {
       console.error(error);
       res.status(500).json({
