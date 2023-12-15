@@ -1,10 +1,8 @@
 import os
 from flask import Flask, request, jsonify
 import tensorflow as tf
-from tensorflow import keras
 from keras.models import load_model
 from keras.preprocessing import image
-import numpy as np
 from PIL import Image
 import tempfile
 
@@ -12,15 +10,7 @@ app = Flask(__name__)
 
 # Declare Model and Class
 class_labels = ['Broccoli','KembangKol','Kentang','Kubis','Labu','Lobak','Paprika','Pare','Telur','Terung','Timun','Tomato','Wortel','Ayam','Sapi']
-model = load_model("yourModel")
-
-# Cors Handling if using web
-@app.after_request
-def add_cors_headers(response):
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Methods'] = 'POST'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
-    return response
+model = load_model("model_checkpoint.h5")
 
 # backend Code for Prediction using image processing
 @app.route("/predict", methods=['POST'])
@@ -69,6 +59,5 @@ def predict():
     except Exception as e:
         return jsonify({"error": str(e)}), 500 
 
-
 if __name__ =='__main__':
-    app.run(host='localhost', port=int(os.environ.get('PORT', 3000)))
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
