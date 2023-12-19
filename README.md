@@ -1,6 +1,9 @@
 # DISHCOVER-API
-API for DISHCOVER 
-## Cara Menjalankan API di local
+These are APIs to LOGIN, LOGOUT, REGISTER, get Recipe, get queryRecipe, get detailRecipe, get History, delete History, get MyFavourite, post Favourite, delete Favourite, and also POST ingredientPredict
+
+# API Endpoint
+
+# Cara Menjalankan API di local
 *Salin perintah ini di terminal kamu atau git bash*
 
 - Clone project from github
