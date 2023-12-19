@@ -3,6 +3,8 @@ These are APIs to LOGIN, LOGOUT, REGISTER, get Recipe, get queryRecipe, get deta
 
 # API Endpoint
 
+### [API Documentation](https://splendid-berry-966.notion.site/DISHCOVER-API-261a08372da04fd699211d64a931e9ef?pvs=4)
+
 # Cara Menjalankan API di local
 *Salin perintah ini di terminal kamu atau git bash*
 
