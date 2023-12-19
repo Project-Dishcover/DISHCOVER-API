@@ -48,3 +48,17 @@ model History {
   User        User        @relation(fields: [user_id], references: [id])
   recipe      Recipe      @relation(fields: [recipe_id], references: [id])
 }
+
+model Bahan {
+  id          String      @id @default(uuid())
+  user_id     String      // Menyimpan ID pengguna yang terkait
+  nama   String      // Menyimpan ID resep yang terkait
+  Pantry   Pantry[]
+}
+
+model Pantry {
+  id          String      @id @default(uuid())
+  user_id     String      // Menyimpan ID pengguna yang terkait
+  bahan_id    String
+  Bahan        Bahan        @relation(fields: [bahan_id], references: [id])
+}

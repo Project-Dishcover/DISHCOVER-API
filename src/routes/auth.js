@@ -9,3 +9,4 @@ export const authRouter = Router();
 authRouter.post('/signup', authController.signup);
 authRouter.post('/login', authController.login);
 authRouter.post('/logout', authenticateToken, authController.logout);
+authRouter.get('/profile', authenticateToken, authController.getProfile);
