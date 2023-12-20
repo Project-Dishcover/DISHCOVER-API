@@ -79,7 +79,7 @@ export async function deleteAllPantry (req, res) {
     const {user_id} = req.user;
 
     try {
-        const pantry = await prisma.pantry.deleteMany({ where: { user_id } });
+        const pantry = await prisma.pantry.deleteMany({ where: { user_id: user_id } });
         if (!pantry) {
           res.status(200).json({
             message: 'user ini tidak ada dalam pantry',
