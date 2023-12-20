@@ -11,28 +11,14 @@ export async function getBahans(req, res) {
             bahans = await prisma.bahan.findMany({
                 where: {
                     OR: [
-                        { name: { contains: req.query.query } },
+                        { nama: { contains: req.query.query } },
                         // Tambahkan kolom-kolom lain yang ingin disertakan dalam pencarian di atas
                     ],
                 },
-                select: {
-                    name: true,
-                },
-                take: 100,
-                skip: 5,
             });
         } else {
             // Jika tidak ada parameter query atau keywords, ambil semua resep
-            bahans = await prisma.bahan.findMany({
-                select: {
-                    id: true,
-                    name: true,
-                    description: true,
-                    urlimage: true,
-                },
-                take: 100,
-                skip: 5, // pagination
-            });
+            bahans = await prisma.bahan.findMany();
         }
 
         // Handle jika tidak ada resep yang ditemukan
@@ -54,3 +40,4 @@ export async function getBahans(req, res) {
         });
     }
 }
+

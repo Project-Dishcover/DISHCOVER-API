@@ -1,7 +1,9 @@
 
 import { authRouter } from './routes/auth.js';
+import { bahanRouter } from './routes/bahan.js';
 import { myfavourite } from './routes/favourite.js';
 import { historyRouter } from './routes/history.js';
+import { pantryRoute } from './routes/pantry.js';
 import { recipeRouter } from './routes/recipe.js';
 import express from 'express';
 
@@ -14,8 +16,10 @@ app.use(express.json());
 // Routes
 app.use('/api/user', authRouter);
 app.use('/api/recipe', recipeRouter);
+app.use('/api/bahan', bahanRouter);
 app.use('/api/myfavourite', myfavourite);
 app.use('/api/history', historyRouter);
+app.use('/api/pantry', pantryRoute);
 
 
 

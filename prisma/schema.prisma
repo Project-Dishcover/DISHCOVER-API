@@ -19,6 +19,7 @@ model User {
   timestamp   DateTime    @default(now())
   favorites   Favourite[]
   histories   History[]
+  pantries   Pantry[]
 }
 
 model Recipe {
@@ -51,14 +52,15 @@ model History {
 
 model Bahan {
   id          String      @id @default(uuid())
-  user_id     String      // Menyimpan ID pengguna yang terkait
   nama   String      // Menyimpan ID resep yang terkait
+  gambar String
   Pantry   Pantry[]
 }
 
 model Pantry {
   id          String      @id @default(uuid())
   user_id     String      // Menyimpan ID pengguna yang terkait
-  bahan_id    String
-  Bahan        Bahan        @relation(fields: [bahan_id], references: [id])
+  bahan_id       String
+  User        User        @relation(fields: [user_id], references: [id])
+  bahan      Bahan      @relation(fields: [bahan_id], references: [id])
 }
