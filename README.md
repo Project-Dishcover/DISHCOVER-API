@@ -19,7 +19,7 @@ git clone https://github.com/Project-Dishcover/DISHCOVER-API.git
 cd DISHCOVER-API
 ```
 
--   make .env from .env.example
+-   copy .env from .env.example
 
 ```bash
 
@@ -30,7 +30,7 @@ cp .env.example .env
 - Change the database name in the .env file
 
 ```bash
-DB_DATABASE_DEV=mysql://root:@localhost:(your route)/yourdb
+DB_DATABASE_DEV=mysql://root:@localhost:(your port)/yourdb
 ```
 
 - Install All Dependencies
