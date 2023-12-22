@@ -19,15 +19,12 @@ git clone https://github.com/Project-Dishcover/DISHCOVER-API.git
 cd DISHCOVER-API
 ```
 
--   There are two env in this repository, <br/> one in root => for Database <br/> one inside src/ => for JWT Token <br>
-    Copy the .env.example file to .env
+-   make .env from .env.example
 
 ```bash
-cp .env.example .env
-
-cd src/
 
 cp .env.example .env
+
 ```
 
 - Change the database name in the .env file
@@ -39,7 +36,7 @@ DB_DATABASE_DEV=mysql://root:@localhost:(your route)/yourdb
 - Install All Dependencies
 
 ```bash
-node install
+npm install
 ```
 
 - Migrate Database
